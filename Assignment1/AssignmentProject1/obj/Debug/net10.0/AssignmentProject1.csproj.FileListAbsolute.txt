@@ -188,3 +188,4 @@
 /Users/mridul/Desktop/Furman Classes/CSC 223/CSC223-Labs-in-CSharp/Assignment1/AssignmentProject1/obj/Debug/net10.0/AssignmentProject1.pdb
 /Users/mridul/Desktop/Furman Classes/CSC 223/CSC223-Labs-in-CSharp/Assignment1/AssignmentProject1/obj/Debug/net10.0/AssignmentProject1.genruntimeconfig.cache
 /Users/mridul/Desktop/Furman Classes/CSC 223/CSC223-Labs-in-CSharp/Assignment1/AssignmentProject1/obj/Debug/net10.0/ref/AssignmentProject1.dll
+/Users/mridul/Desktop/Furman Classes/CSC 223/CSC223-Labs-in-CSharp/Assignment1/AssignmentProject1/obj/Debug/net10.0/AssignmentProject1.sourcelink.json

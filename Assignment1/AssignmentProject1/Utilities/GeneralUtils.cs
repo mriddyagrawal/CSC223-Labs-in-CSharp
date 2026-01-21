@@ -1,10 +1,9 @@
 /**
  * Provides general utility methods for common operations including array/list manipulation,
  * string validation, and mathematical calculations. All methods are static and generic where applicable.
- *
- * Bugs: None known
- *
- * @author Mridul
+ * Copilot was used for header, comments and docstrings.
+ * *
+ * @author Mridul Agrawal and Graham Fink
  * @date January 21, 2026
  */
 
@@ -13,25 +12,22 @@ using Xunit.Abstractions;
 
 public static class GeneralUtils
 {
-    #region Array and List Operations
-
     /// <summary>
-    /// Checks if a specific item exists in an array.
+    /// Checks if an array contains a specific item using equality comparison.
     /// </summary>
     /// <typeparam name="T">The type of elements in the array</typeparam>
-    /// <param name="array">The array to search through</param>
-    /// <param name="item">The item to search for</param>
-    /// <returns>True if the item is found; otherwise, false</returns>
-    public static bool Contains<T>(T[] array, T item)
+    /// <param name="arr">The array to search</param>
+    /// <param name="target">The item to search for</param>
+    /// <returns>True if the array contains the target, false otherwise</returns>
+    public static bool Contains<T>(T[] arr, T target)
     {
-        // Iterate through each element to check for equality
-        foreach (var element in array)
+        // Iterate through each element in the array
+        for (int i = 0; i < arr.Length; i++)
         {
-            if (EqualityComparer<T>.Default.Equals(element, item))
-            {
-                return true;
-            }
+            // Use EqualityComparer to check if current element equals target
+            if (EqualityComparer<T>.Default.Equals(arr[i],(target))) return true;
         }
+        // Target not found in array
         return false;
     }
 
@@ -100,19 +96,24 @@ public static class GeneralUtils
         return duplicates.ToArray();
     }
 
-    #endregion
-
-    #region String Utilities
-
     /// <summary>
-    /// Generates an indentation string based on the specified nesting level.
-    /// Each level produces 4 spaces.
+    /// Returns a string with spaces for the specified indentation level.
     /// </summary>
-    /// <param name="level">The indentation level (0 = no indentation)</param>
-    /// <returns>A string containing the appropriate number of spaces</returns>
+    /// <param name="level">The indentation level (4 spaces per level)</param>
+    /// <returns>A string containing 4 * level spaces</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when level is negative</exception>
     public static string GetIndentation(int level)
     {
-        return new string(' ', level * 4);
+        // Validate that level is non-negative
+        if (level < 0) throw new ArgumentOutOfRangeException("Level must be positive");
+        
+        string indentation = "";
+        // Build indentation string by adding 4 spaces per level
+        for (int i = 0; i < level; i++)
+        {
+            indentation += "    ";
+        }
+        return indentation;
     }
 
     /// <summary>
@@ -168,6 +169,103 @@ public static class GeneralUtils
         return (sum / count);
     }
 
-    #endregion
+    /// <summary>
+    /// Checks if a string contains only lowercase letters.
+    /// </summary>
+    /// <param name="name">The string to validate</param>
+    /// <returns>True if the string contains only lowercase letters, false otherwise</returns>
+    public static bool IsValidVariable(string name)
+    {
+        // Empty strings are not valid
+        if (name.Equals("")) return false;
+        
+        // Check each character to ensure it's a lowercase letter
+        foreach (char c in name)
+        {
+            // Character must be between 'a' and 'z' inclusive
+            if (c > 'z' || c < 'a')
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// Checks if a string is a valid mathematical operator.
+    /// </summary>
+    /// <param name="op">The string to validate</param>
+    /// <returns>True if the string is one of: +, -, *, /, //, %, **</returns>
+    public static bool IsValidOperator(string op)
+    {
+        // Check if operator matches any of the valid operators
+        if (op.Equals("+") || op.Equals("-") || op.Equals("*") || op.Equals("/") || 
+            op.Equals("//") || op.Equals("%") || op.Equals("**"))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Counts how many times a given character appears in a string.
+    /// </summary>
+    /// <param name="s">The string to search</param>
+    /// <param name="c">The character to count</param>
+    /// <returns>The number of occurrences of the character in the string</returns>
+    public static int CountOccurrences(string s, char c)
+    {
+        int numberOfCharacters = 0;
+        
+        // Iterate through each character in the string
+        foreach (char d in s)
+        {
+            // Increment counter if character matches
+            if (d.Equals(c)) numberOfCharacters++;
+        }
+        return numberOfCharacters;
+    }
+
+        /// <summary>
+    /// Converts space-separated words to camelCase format.
+    /// The first character is lowercase, spaces are removed, and the first letter 
+    /// after each space is capitalized.
+    /// </summary>
+    /// <param name="s">The space-separated string to convert</param>
+    /// <returns>The string in camelCase format</returns>
+    /// <example>
+    /// "Hello world test string" returns "helloWorldTestString"
+    /// </example>
+    public static string ToCamelCase(string s)
+    {
+        string result = "";
+        bool capitalizeNextLetter = false;
+        bool firstLetter = true;
+        
+        // Process each character in the input string
+        foreach (char c in s)
+        {
+            // Skip spaces but mark that next letter should be capitalized
+            if (c.Equals(' '))
+            {
+                capitalizeNextLetter = true;
+                continue;
+            }
+            
+            // Capitalize if this follows a space
+            if (capitalizeNextLetter && !firstLetter)
+            {
+                result += char.ToUpper(c);
+            }
+            else 
+            {
+                // Lowercase the character
+                result += char.ToLower(c);
+                firstLetter = false;
+            }
+            capitalizeNextLetter = false;
+        }
+        return result;
+    }
 
 }

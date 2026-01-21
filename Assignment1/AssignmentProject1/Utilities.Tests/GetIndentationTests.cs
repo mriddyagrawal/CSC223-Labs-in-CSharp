@@ -105,4 +105,40 @@ public class GetIndentationTests
         // Assert
         Assert.Equal(expectedLength, result.Length);
     }
+    public static IEnumerable<object[]> IndentationTestData =>
+        new List<object[]>
+        {
+            new object[] { 0, "" },
+            new object[] { 1, "    " },
+            new object[] { 2, "        " },
+            new object[] { 3, "            " },
+            new object[] { 5, "                    " }
+        };
+
+    [Theory]
+    [MemberData(nameof(IndentationTestData))]
+    public void GetIndentation_WithValidLevel_ReturnsCorrectSpaces(int level, string expected)
+    {
+        string result = GeneralUtils.GetIndentation(level);
+        Assert.Equal(expected, result);
+    }
+
+    [Theory]
+    [InlineData(0, 0)]
+    [InlineData(1, 4)]
+    [InlineData(2, 8)]
+    [InlineData(3, 12)]
+    public void GetIndentation_WithValidLevel_ReturnsCorrectLength(int level, int expectedLength)
+    {
+        string result = GeneralUtils.GetIndentation(level);
+        Assert.Equal(expectedLength, result.Length);
+    }
+
+    [Fact]
+    public void GetIndentation_WithZeroLevel_ReturnsEmptyString()
+    {
+        string result = GeneralUtils.GetIndentation(0);
+        Assert.Empty(result);
+    }
+
 }

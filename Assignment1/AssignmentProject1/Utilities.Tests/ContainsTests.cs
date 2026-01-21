@@ -169,4 +169,41 @@ public class GeneralUtilsTests
         // Assert
         Assert.True(result);
     }
+
+        public static IEnumerable<object[]> ContainsIntTestData =>
+        new List<object[]>
+        {
+            new object[] { new int[] { 1, 2, 3, 4, 5 }, 3, true },
+            new object[] { new int[] { 1, 2, 3, 4, 5 }, 6, false },
+            new object[] { new int[] { 10 }, 10, true },
+            new object[] { new int[] { 10 }, 5, false },
+            new object[] { new int[] { -1, 0, 1 }, 0, true },
+            new object[] { new int[] { }, 1, false }
+        };
+
+    [Theory]
+    [MemberData(nameof(ContainsIntTestData))]
+    public void Contains_WithIntArray_ReturnsExpectedResult(int[] arr, int target, bool expected)
+    {
+        bool result = GeneralUtils.Contains(arr, target);
+        Assert.Equal(expected, result);
+    }
+
+    public static IEnumerable<object[]> ContainsStringTestData =>
+        new List<object[]>
+        {
+            new object[] { new string[] { "apple", "banana", "cherry" }, "banana", true },
+            new object[] { new string[] { "apple", "banana", "cherry" }, "orange", false },
+            new object[] { new string[] { "hello" }, "hello", true },
+            new object[] { new string[] { "" }, "", true },
+            new object[] { new string[] { }, "test", false }
+        };
+
+    [Theory]
+    [MemberData(nameof(ContainsStringTestData))]
+    public void Contains_WithStringArray_ReturnsExpectedResult(string[] arr, string target, bool expected)
+    {
+        bool result = GeneralUtils.Contains(arr, target);
+        Assert.Equal(expected, result);
+    }
 }
