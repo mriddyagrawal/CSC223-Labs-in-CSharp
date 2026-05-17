@@ -199,12 +199,8 @@ public static class GeneralUtils
     public static bool IsValidOperator(string op)
     {
         // Check if operator matches any of the valid operators
-        if (op.Equals("+") || op.Equals("-") || op.Equals("*") || op.Equals("/") || 
-            op.Equals("//") || op.Equals("%") || op.Equals("**"))
-        {
-            return true;
-        }
-        return false;
+        return (op.Equals("+") || op.Equals("-") || op.Equals("*") || op.Equals("/") || 
+                op.Equals("//") || op.Equals("%") || op.Equals("**"));
     }
 
     /// <summary>
